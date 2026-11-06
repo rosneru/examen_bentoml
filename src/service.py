@@ -48,14 +48,24 @@ def create_jwt_token(user_id: str) -> str:
 class JWTAuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         if request.url.path.endswith('/predict'):
-            token = request.headers.get('Authorization')
-            if not token:
+            auth_header = request.headers.get('Authorization')
+            if not auth_header:
                 return JSONResponse(
                     status_code=401,
                     content={'detail': 'Missing authentication token'},
                 )
+            # Expected format: 'Bearer <token>'
+            scheme, _, token = auth_header.partition(' ')
+            token = token.strip()
+            if scheme.lower() != 'bearer' or not token:
+                return JSONResponse(
+                    status_code=401,
+                    content={
+                        'detail': 'Malformed authorization header, '
+                        'expected: Bearer <token>'
+                    },
+                )
             try:
-                token = token.split()[1]  # Bearer <token>
                 payload = jwt.decode(
                     token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM]
                 )
