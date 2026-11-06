@@ -3,9 +3,8 @@ from typing import cast
 
 import bentoml
 import jwt
-import numpy as np
 import pandas as pd
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 from sklearn.linear_model import LinearRegression
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
