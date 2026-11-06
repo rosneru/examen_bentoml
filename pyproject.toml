@@ -15,3 +15,9 @@ quote-style = "single"
 [tool.ruff.lint]
 # Disable fix for unused imports (`F401`).
 unfixable = ["F401"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "requests>=2.34.2",
+]
