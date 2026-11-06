@@ -2,10 +2,25 @@ from pathlib import Path
 
 import pandas as pd
 
+FEATURE_NAMES = [
+    'GRE Score',
+    'TOEFL Score',
+    'University Rating',
+    'SOP',
+    'LOR',
+    'CGPA',
+    'Research',
+]
+
+TARGET = 'Chance of Admit'
+
 
 def preprocess_raw_data(raw_data_full_path: Path, processed_data_dir: Path):
     df = pd.read_csv(raw_data_full_path)
-    print(df.head())
+    df.columns = df.columns.str.strip()
+
+    features = df[FEATURE_NAMES]
+    target = df[TARGET]
 
 
 if __name__ == '__main__':
