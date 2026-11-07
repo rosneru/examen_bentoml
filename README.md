@@ -1,25 +1,23 @@
 # BentoML Exam
 
-This directory contains the basic structure needed to submit your work for the BentoML exam.
+## About
 
-You are free to add other folders or files if you think it would be helpful.
+BentoML exam completed by Uwe Rosner as part of the Liora MLOps training.
 
-Here is how the exam submission folder is organized:
+## Development information
 
-```bash       
-├── examen_bentoml          
-│   ├── data       
-│   │   ├── processed      
-│   │   └── raw           
-│   ├── models      
-│   ├── src       
-│   └── README.md
+Prerequisites: [`uv`](https://docs.astral.sh/uv/), `make`, `curl`, Docker and
+[`jq`](https://jqlang.org/) (used by the Makefile to extract the JWT token,
+e.g. `sudo apt install jq`).
+
+```bash
+uv sync           # install Python 3.12 and all dependencies
+make prepare      # clean and split the data into data/processed/
+make train        # train the model, save it as admission_lr in the BentoML model store
+make serve        # start the API on port 3000 (keep running, use a second terminal)
+make predict      # log in and request a sample prediction
+uv run pytest -v  # run the API tests against the running service
 ```
 
-To get started on the project, follow these steps:
-
-- Fork the project to your GitHub account
-- Clone the project to your computer
-- Download the dataset from the following link: [Download link](https://assets-datascientest.s3.eu-west-1.amazonaws.com/MLOPS/bentoml/admission.csv)
-
-Good luck!
+Test credentials: `user123` / `password123`. The tests use
+`http://localhost:3000` by default, override with `API_URL=... uv run pytest -v`.
