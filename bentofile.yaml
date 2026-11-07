@@ -1,0 +1,21 @@
+service: "src.service:AdmissionService"
+name: "admission_prediction_service"
+description: "Admissions prediction service"
+labels:
+  owner: "rosner"
+  project: "admissions"
+include:
+  - "src/"
+exclude:
+  - "__pycache__/"
+models:
+  - admission_lr:latest
+python:
+  packages:
+    - bentoml==1.4.40
+    - pandas==3.1.1
+    - pydantic==2.14.3
+    - pyjwt==2.15.1
+    - scikit-learn==1.9.1
+docker:
+  python_version: "3.12"
